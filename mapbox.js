@@ -1,7 +1,7 @@
 function a(){
 	
       var regionaSource =  new mapboxgl.source.Vector({
-          url: '/simda/media/limiteregional.geojson',
+          url: 'limiteregional.geojson',
           format: new mapboxgl.format.GeoJSON() 
         })
       

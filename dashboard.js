@@ -1,6 +1,3 @@
-    	function myFunction() {
-    		document.getElementById("demo").innerHTML = "Paragraph changed.";
-    	}
 
     	function mostrarGraficoChuva(){
     		document.getElementById('chuva').innerHTML += '<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/apps/matlab_visualizations/230418"></iframe>'

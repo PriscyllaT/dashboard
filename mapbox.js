@@ -56,16 +56,31 @@ map.on('load', function () {
 
     var regionais = 'https://raw.githubusercontent.com/PriscyllaT/dashboard/master/bairrosregionais.json';
     var bairros = 'https://raw.githubusercontent.com/PriscyllaT/dashboard/master/limitebairro.json';
-    map.addSource( 'map', { type: 'geojson', data: regionais});
-
+  
+      map.addLayer({
+        'id': 'bairros',
+        'type': 'line',
+        'source': {
+            'type': 'geojson',
+            'data': bairros
+        },
+        'layout': {},
+        'paint':{
+            'line-color': '#F7455D' // red
+        }
+    });
+      
     map.addLayer({
-        'id': 'maine',
+        'id': 'regionais',
         'type': 'line',
         'source': {
             'type': 'geojson',
             'data': regionais
         },
-        'layout': {}
+        'layout': {},
+        'paint':{
+        	'line-width': 3
+        }
     });
 });
 }	

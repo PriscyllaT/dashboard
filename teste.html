@@ -26,45 +26,84 @@
 
 <div id='map'></div>
 <script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoicHJpc2N5bGxhdCIsImEiOiJjamxqZG9nM3gwYXMzM3ZteGFpMDI3dHdsIn0.r_t2Hf1KDlHe9iA8cwF11w'; 
-    var geojson = {
-    "type": "FeatureCollection",
-    "features": [
-        {
+    var ocorrencias = []
+    var mensagem = "Ponto"
+    var latitude  = -38.524251
+    var longitude = -3.737879
+    var json = {
             "type": "Feature",
             "properties": {
-                "message": "Foo",
+                "message": mensagem,
                 "iconSize": [60, 60]
             },
             "geometry": {
                 "type": "Point",
-                "coordinates": [-38.524251,-3.737879]
+                "coordinates": [latitude,longitude]
             }
-        },
-        {
+    }
+
+    ocorrencias.push(json)
+
+     var latitude  = -38.524264
+    var longitude = -3.737880
+    var json = {
             "type": "Feature",
             "properties": {
-                "message": "Bar",
-                "iconSize": [50, 50]
+                "message": mensagem,
+                "iconSize": [60, 60]
             },
             "geometry": {
                 "type": "Point",
-                "coordinates": [-38.524252,-3.737878]
+                "coordinates": [latitude,longitude]
             }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "message": "Baz",
-                "iconSize": [40, 40]
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates":[-38.524241,-3.737869]
-            }
-        }
-    ]
-};
+    }
+
+    ocorrencias.push(json)
+    var myJsonString = JSON.stringify(ocorrencias);
+    mapboxgl.accessToken = 'pk.eyJ1IjoicHJpc2N5bGxhdCIsImEiOiJjamxqZG9nM3gwYXMzM3ZteGFpMDI3dHdsIn0.r_t2Hf1KDlHe9iA8cwF11w'; 
+     var geojson = { 
+        "type": "FeatureCollection",
+        "features": ocorrencias};
+
+
+//     var geojson = {
+//     "type": "FeatureCollection",
+//     "features": [
+//         {
+//             "type": "Feature",
+//             "properties": {
+//                 "message": "Foo",
+//                 "iconSize": [60, 60]
+//             },
+//             "geometry": {
+//                 "type": "Point",
+//                 "coordinates": [-38.524251,-3.737879]
+//             }
+//         },
+//         {
+//             "type": "Feature",
+//             "properties": {
+//                 "message": "Bar",
+//                 "iconSize": [50, 50]
+//             },
+//             "geometry": {
+//                 "type": "Point",
+//                 "coordinates": [-38.524252,-3.737878]
+//             }
+//         },
+//         {
+//             "type": "Feature",
+//             "properties": {
+//                 "message": "Baz",
+//                 "iconSize": [40, 40]
+//             },
+//             "geometry": {
+//                 "type": "Point",
+//                 "coordinates":[-38.524241,-3.737869]
+//             }
+//         }
+//     ]
+// };
 
 
     // // add markers to map

@@ -44,6 +44,45 @@ function mostrarRegionais(){
 // mapboxgl.accessToken = 'pk.eyJ1IjoicHJpc2N5bGxhdCIsImEiOiJjamxqZG9nM3gwYXMzM3ZteGFpMDI3dHdsIn0.r_t2Hf1KDlHe9iA8cwF11w';
 
 		
+    var ocorrencias = []
+    var mensagem = "Ponto"
+    var latitude  = -38.524251
+    var longitude = -3.737879
+    var json = {
+            "type": "Feature",
+            "properties": {
+                "message": mensagem,
+                "iconSize": [60, 60]
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [latitude,longitude]
+            }
+    }
+
+    ocorrencias.push(json)
+
+     var latitude  = -38.524264
+    var longitude = -3.737880
+    var json = {
+            "type": "Feature",
+            "properties": {
+                "message": mensagem,
+                "iconSize": [60, 60]
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [latitude,longitude]
+            }
+    }
+
+    ocorrencias.push(json)
+    var myJsonString = JSON.stringify(ocorrencias);
+     var geojson = { 
+        "type": "FeatureCollection",
+        "features": ocorrencias};
+
+
 mapboxgl.accessToken = 'pk.eyJ1IjoicHJpc2N5bGxhdCIsImEiOiJjamxqZG9nM3gwYXMzM3ZteGFpMDI3dHdsIn0.r_t2Hf1KDlHe9iA8cwF11w'; 
 var map = new mapboxgl.Map({
     container: 'map',
@@ -82,5 +121,24 @@ map.on('load', function () {
         	'line-width': 3
         }
     });
+});
+
+ // add markers to map
+geojson.features.forEach(function(marker) {
+    // create a DOM element for the marker
+    var el = document.createElement('div');
+    el.className = 'marker';
+    el.style.backgroundImage = 'url(https://raw.githubusercontent.com/PriscyllaT/dashboard/master/rd.png)';
+    el.style.width = '10px';
+    el.style.height = '10px';
+
+    el.addEventListener('click', function() {
+        window.alert(marker.properties.message);
+    });
+
+    // add marker to map
+    new mapboxgl.Marker(el)
+        .setLngLat(marker.geometry.coordinates)
+        .addTo(map);
 });
 }	

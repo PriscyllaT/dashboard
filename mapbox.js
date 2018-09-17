@@ -1,5 +1,23 @@
-function mostrarRegionais(){
+
+function httpGetAsync() {
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function (){
+        if (xhttp.readyState == 4) {
+            if (xhttp.status = 200)
+                mostrarRegionais(this.responseText)
+        }
+    }
+    xhttp.open("GET", "https://api.thingspeak.com/channels/494997/feeds.json?results=150", true)
+
+    xhttp.send()
+
+}
+
+
+function mostrarRegionais(responseText){
 	
+   
 //       var regionaSource =  new mapboxgl.source.Vector({
 //           url: 'limiteregional.geojson',
 //           format: new mapboxgl.format.GeoJSON() 
@@ -42,9 +60,16 @@ function mostrarRegionais(){
 //         })
 //       });
 // mapboxgl.accessToken = 'pk.eyJ1IjoicHJpc2N5bGxhdCIsImEiOiJjamxqZG9nM3gwYXMzM3ZteGFpMDI3dHdsIn0.r_t2Hf1KDlHe9iA8cwF11w';
+	var jsonResposta = JSON.parse(responseText)
+    console.log(jsonResposta)
+    var ocorrencias = jsonResposta.feeds
 
-		
-    var ocorrencias = []
+    for(i = 0; i <= ocorrencias.length; i++){
+       
+        console.log(ocorrencias[i].field1)
+       
+    }
+    var a = []
     var mensagem = "Ponto"
     var latitude  = -38.524251
     var longitude = -3.737879
@@ -60,7 +85,7 @@ function mostrarRegionais(){
             }
     }
 
-    ocorrencias.push(json)
+    a.push(json)
 
      var latitude  = -38.524264
     var longitude = -3.737880
@@ -76,11 +101,11 @@ function mostrarRegionais(){
             }
     }
 
-    ocorrencias.push(json)
-    var myJsonString = JSON.stringify(ocorrencias);
+    a.push(json)
+    var myJsonString = JSON.stringify(a);
      var geojson = { 
         "type": "FeatureCollection",
-        "features": ocorrencias};
+        "features": a};
 
 
 mapboxgl.accessToken = 'pk.eyJ1IjoicHJpc2N5bGxhdCIsImEiOiJjamxqZG9nM3gwYXMzM3ZteGFpMDI3dHdsIn0.r_t2Hf1KDlHe9iA8cwF11w'; 

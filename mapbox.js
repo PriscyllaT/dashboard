@@ -63,7 +63,7 @@ function mostrarRegionais(responseText){
 	var jsonResposta = JSON.parse(responseText)
     console.log(jsonResposta)
     var ocorrencias = jsonResposta.feeds
-   var a = []
+    var a = []
     
      for(i = 0; i < ocorrencias.length; i++){
        
@@ -106,6 +106,7 @@ function mostrarRegionais(responseText){
     var longitude  = -38.524264
      var latitude = -3.737880
     var json = {
+            "id": 'ocorrencia',
             "type": "Feature",
             "properties": {
                 "message": mensagem,
@@ -164,24 +165,43 @@ map.on('load', function () {
         	'line-width': 3
         }
     });
+
+     map.addLayer({
+        'id': 'population',
+        'type': 'circle',
+        'source': {
+           'type': 'geojson',
+           'data': geojson
+        },
+         'paint': {
+            // make circles larger as the user zooms from z12 to z22
+            'circle-radius': {
+                'base': 1.75,
+                'stops': [[12, 2], [22, 180]]
+            },
+            // color circles by ethnicity, using a match expression
+            // https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-match
+            'circle-color': '#FF0000'
+        }
+    });
 });
 
  // add markers to map
-geojson.features.forEach(function(marker) {
-    // create a DOM element for the marker
-    var el = document.createElement('div');
-    el.className = 'marker';
-    el.style.backgroundImage = 'url(https://raw.githubusercontent.com/PriscyllaT/dashboard/master/rd.png)';
-    el.style.width = '10px';
-    el.style.height = '10px';
+// geojson.features.forEach(function(marker) {
+//     // create a DOM element for the marker
+//     var el = document.createElement('div');
+//     el.className = 'marker';
+//     el.style.backgroundImage = 'url(https://raw.githubusercontent.com/PriscyllaT/dashboard/master/rd.png)';
+//     el.style.width = '10px';
+//     el.style.height = '10px';
 
-    el.addEventListener('click', function() {
-        window.alert(marker.properties.message);
-    });
+//     el.addEventListener('click', function() {
+//         window.alert(marker.properties.message);
+//     });
 
-    // add marker to map
-    new mapboxgl.Marker(el)
-        .setLngLat(marker.geometry.coordinates)
-        .addTo(map);
-});
+//     // add marker to map
+//     new mapboxgl.Marker(el)
+//         .setLngLat(marker.geometry.coordinates)
+//         .addTo(map);
+// });
 }	

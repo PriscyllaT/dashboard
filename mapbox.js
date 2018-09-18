@@ -64,15 +64,30 @@ function mostrarRegionais(responseText){
     console.log(jsonResposta)
     var ocorrencias = jsonResposta.feeds
 
-    for(i = 0; i <= ocorrencias.length; i++){
+     for(i = 0; i < 3; i++){
        
-        console.log(ocorrencias[i].field1)
-       
+       // console.log(ocorrencias[i].field1)
+         var latitude  = parseFloat(ocorrencias[i].field7)
+        var longitude = parseFloat(ocorrencias[i].field6)
+         var json = {
+                "type": "Feature",
+                "properties": {
+                    "message": mensagem,
+                    "iconSize": [60, 60]
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [longitude,latitude]
+                }
+        }
     }
+
+     console.log(json)
     var a = []
+     a.push(json)
     var mensagem = "Ponto"
-    var latitude  = -38.524251
-    var longitude = -3.737879
+    var longitude  = -38.524251
+    var latitude = -3.737879
     var json = {
             "type": "Feature",
             "properties": {
@@ -81,14 +96,14 @@ function mostrarRegionais(responseText){
             },
             "geometry": {
                 "type": "Point",
-                "coordinates": [latitude,longitude]
+                "coordinates": [longitude,latitude]
             }
     }
 
     a.push(json)
 
-     var latitude  = -38.524264
-    var longitude = -3.737880
+    var longitude  = -38.524264
+     var latitude = -3.737880
     var json = {
             "type": "Feature",
             "properties": {
@@ -97,11 +112,13 @@ function mostrarRegionais(responseText){
             },
             "geometry": {
                 "type": "Point",
-                "coordinates": [latitude,longitude]
+                "coordinates":[longitude,latitude]
             }
     }
 
     a.push(json)
+
+     console.log(json)
     var myJsonString = JSON.stringify(a);
      var geojson = { 
         "type": "FeatureCollection",

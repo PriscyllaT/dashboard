@@ -8,7 +8,7 @@ function httpGetAsync() {
                 mostrarRegionais(this.responseText)
         }
     }
-    xhttp.open("GET", "https://api.thingspeak.com/channels/494997/feeds.json?results=150", true)
+    xhttp.open("GET", "https://api.thingspeak.com/channels/494997/feeds.json?results=30000", true)
 
     xhttp.send()
 
@@ -166,42 +166,78 @@ map.on('load', function () {
         }
     });
 
-     map.addLayer({
-        'id': 'population',
-        'type': 'circle',
-        'source': {
-           'type': 'geojson',
-           'data': geojson
-        },
-         'paint': {
-            // make circles larger as the user zooms from z12 to z22
-            'circle-radius': {
-                'base': 1.75,
-                'stops': [[12, 2], [22, 180]]
-            },
-            // color circles by ethnicity, using a match expression
-            // https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-match
-            'circle-color': '#FF0000'
+    //  map.addLayer({
+    //     'id': 'population',
+    //     'type': 'circle',
+    //     'source': {
+    //        'type': 'geojson',
+    //        'data': geojson
+    //     },
+    //      'paint': {
+    //         // make circles larger as the user zooms from z12 to z22
+    //         'circle-radius': {
+    //             'base': 1.75,
+    //             'stops': [[12, 2], [22, 180]]
+    //         },
+    //         // color circles by ethnicity, using a match expression
+    //         // https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-match
+    //         'circle-color': '#FF0000'
+    //     }
+    // });
+ map.addSource("earthquakes", {
+        type: "geojson",
+        // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
+        // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
+        data: geojson,
+        cluster: true,
+        clusterMaxZoom: 14, // Max zoom to cluster points on
+        clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
+    });
+
+ map.addLayer({
+        id: "clusters",
+        type: "circle",
+        source: "earthquakes",
+        filter: ["has", "point_count"],
+        paint: {
+            // Use step expressions (https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
+            // with three steps to implement three types of circles:
+            //   * Blue, 20px circles when point count is less than 100
+            //   * Yellow, 30px circles when point count is between 100 and 750
+            //   * Pink, 40px circles when point count is greater than or equal to 750
+            "circle-color": [
+                "step",
+                ["get", "point_count"],
+                "#51bbd6",
+                100,
+                "#f1f075",
+                750,
+                "#f28cb1"
+            ],
+            "circle-radius": [
+                "step",
+                ["get", "point_count"],
+                20,
+                100,
+                30,
+                750,
+                40
+            ]
         }
     });
+ map.addLayer({
+        id: "cluster-count",
+        type: "symbol",
+        source: "earthquakes",
+        filter: ["has", "point_count"],
+        layout: {
+            "text-field": "{point_count_abbreviated}",
+            "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+            "text-size": 12
+        }
+    });
+
 });
 
- // add markers to map
-// geojson.features.forEach(function(marker) {
-//     // create a DOM element for the marker
-//     var el = document.createElement('div');
-//     el.className = 'marker';
-//     el.style.backgroundImage = 'url(https://raw.githubusercontent.com/PriscyllaT/dashboard/master/rd.png)';
-//     el.style.width = '10px';
-//     el.style.height = '10px';
 
-//     el.addEventListener('click', function() {
-//         window.alert(marker.properties.message);
-//     });
-
-//     // add marker to map
-//     new mapboxgl.Marker(el)
-//         .setLngLat(marker.geometry.coordinates)
-//         .addTo(map);
-// });
 }	

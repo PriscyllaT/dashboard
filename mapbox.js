@@ -63,8 +63,9 @@ function mostrarRegionais(responseText){
 	var jsonResposta = JSON.parse(responseText)
     console.log(jsonResposta)
     var ocorrencias = jsonResposta.feeds
-
-     for(i = 0; i < 3; i++){
+   var a = []
+    
+     for(i = 0; i < ocorrencias.length; i++){
        
        // console.log(ocorrencias[i].field1)
          var latitude  = parseFloat(ocorrencias[i].field7)
@@ -80,11 +81,11 @@ function mostrarRegionais(responseText){
                     "coordinates": [longitude,latitude]
                 }
         }
+         a.push(json)
     }
 
      console.log(json)
-    var a = []
-     a.push(json)
+ 
     var mensagem = "Ponto"
     var longitude  = -38.524251
     var latitude = -3.737879

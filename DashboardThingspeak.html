@@ -6,10 +6,13 @@
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.js'></script>
     <script src="dashboard.js"></script>
-    <script src="mapbox.js"></script>
+    <script src="mapbox.js">
+    	httpGetAsync()
+    </script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.css' rel='stylesheet' />
 </head>
 <body>
+
 	<h1>Dashboard de Análise de Arboviroses - Fortaleza</h1>
 	<button type="button" onclick="mostrarGraficoChuva()">
 		Mostrar Gráfico de Chuva

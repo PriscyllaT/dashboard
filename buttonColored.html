@@ -33,49 +33,57 @@ function loadJSON(file, callback) {
  
 
 function load() {
-    
+    var json;
     loadJSON("https://raw.githubusercontent.com/PriscyllaT/dashboard/master/bairrosregionais.json", function(response) {
   
         var actual_JSON = JSON.parse(response);
-        console.log(actual_JSON);
+        mapa(actual_JSON)
+       
     });
-    
-    
+
 }
 
-mapboxgl.accessToken = 'pk.eyJ1IjoicHJpc2N5bGxhdCIsImEiOiJjamxqZG9nM3gwYXMzM3ZteGFpMDI3dHdsIn0.r_t2Hf1KDlHe9iA8cwF11w';
-var map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v9',
-   center: [-38.530723,-3.791678],
-    zoom: 8
-});
-
-map.on('load', function () {
-var regionais = 'https://raw.githubusercontent.com/PriscyllaT/dashboard/master/bairrosregionais.json';
-var bairros = 'https://raw.githubusercontent.com/PriscyllaT/dashboard/master/limitebairro.json';
-
-load()
-    map.addSource("regionaisContorno", {
-    type: "geojson",
-    // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
-    // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
-    data: regionais,
-
-});
-    
-    
-    map.addLayer({
-        'id': 'maine',
-        'type': 'fill',
-        'source':'regionaisContorno',
-        'layout': {},
-        'paint': {
-            'fill-color': '#088',
-            'fill-opacity': 0.8
-        }
+function mapa(actual_JSON){
+    mapboxgl.accessToken = 'pk.eyJ1IjoicHJpc2N5bGxhdCIsImEiOiJjamxqZG9nM3gwYXMzM3ZteGFpMDI3dHdsIn0.r_t2Hf1KDlHe9iA8cwF11w';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v9',
+       center: [-38.530723,-3.791678],
+        zoom: 8
     });
-});
+
+    map.on('load', function () {
+    var regionais = 'https://raw.githubusercontent.com/PriscyllaT/dashboard/master/bairrosregionais.json';
+    var bairros = 'https://raw.githubusercontent.com/PriscyllaT/dashboard/master/limitebairro.json';
+    var jsonRegionais = actual_JSON
+
+      console.log(jsonRegionais.features[0]);
+        map.addSource("regionaisContorno", {
+        type: "geojson",
+        // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
+        // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
+        data: jsonRegionais.features[0],
+
+    });
+
+        
+        
+        map.addLayer({
+            'id': 'maine',
+            'type': 'fill',
+            'source':'regionaisContorno',
+            'layout': {},
+            'paint': {
+                'fill-color': '#088',
+                'fill-opacity': 0.8
+            }
+        });
+
+     //   map.setPaintProperty(jsonRegionais.features[0], 'fill-color', '#f03b20');
+    });
+}
+
+ load();
 </script>
 
 </body>
